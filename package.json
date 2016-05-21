@@ -1,0 +1,40 @@
+{
+  "name": "atm-demo",
+  "version": "0.0.1",
+  "description": "Simple ATM simulator",
+  "main": "index.js",
+  "scripts": {
+    "start": "babel-node ./index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Maria Kuzovchikova <iseesomuch@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "babel-cli": "^6.9.0",
+    "babel-core": "^6.5.2",
+    "babel-eslint": "^6.0.0-beta.5",
+    "babel-loader": "6.2.3",
+    "babel-polyfill": "6.5.0",
+    "babel-preset-es2015": "6.5.0",
+    "babel-preset-react": "6.5.0",
+    "babel-preset-stage-0": "6.5.0",
+    "bootstrap": "^3.3.6",
+    "classnames": "2.2.3",
+    "css-loader": "^0.23.1",
+    "eslint": "^2.2.0",
+    "eslint-config-airbnb": "^6.1.0",
+    "eslint-loader": "^1.3.0",
+    "eslint-plugin-react": "^4.2.1",
+    "express": "^4.13.4",
+    "file-loader": "^0.8.5",
+    "node-sass": "^3.4.2",
+    "react": "0.14.7",
+    "react-bootstrap": "^0.29.4",
+    "react-dom": "0.14.7",
+    "sass-loader": "^3.2.0",
+    "style-loader": "^0.13.0",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
+  }
+}
