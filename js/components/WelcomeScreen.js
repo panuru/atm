@@ -1,16 +1,16 @@
 import React, { PropTypes } from 'react';
 import { Jumbotron } from 'react-bootstrap';
 
-const WelcomeScreen = ({ onInsertCart }) =>
+const WelcomeScreen = ({ onInsertCard }) =>
   (
-    <Jumbotron onClick={onInsertCart}>
+    <Jumbotron onClick={onInsertCard}>
       <h1>Welcome to <nobr>Banky Bank</nobr> ATM!</h1>
-      <p>Please insert your cart.</p>
+      <p>Please insert your card.</p>
     </Jumbotron>
   );
 
 WelcomeScreen.propTypes = {
-  onInsertCart: PropTypes.func.isRequired
+  onInsertCard: PropTypes.func.isRequired
 };
 
 export default WelcomeScreen;

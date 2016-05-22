@@ -1,18 +1,18 @@
 import actionTypes from '../actions/actionTypes';
 
 const initialState = {
-  cart: null,
+  card: null,
   presetWithdrawAmounts: [50, 100, 150, 200, 300, 500],
   transactionState: null
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.INSERT_CART:
+    case actionTypes.INSERT_CARD:
       return {
         ...state,
-        cart: {
-          ...action.cart,
+        card: {
+          ...action.card,
           authorised: false
         }
       };
@@ -20,9 +20,9 @@ export default (state = initialState, action) => {
     case actionTypes.CHECK_PIN:
       return {
         ...state,
-        cart: {
-          ...state.cart,
-          authorised: action.input === state.cart.pin
+        card: {
+          ...state.card,
+          authorised: action.input === state.card.pin
         }
       };
 

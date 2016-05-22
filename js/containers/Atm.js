@@ -10,20 +10,20 @@ const atmScreens = {
   Error: 'Error'
 };
 
-@connect((state) => ({ cart: state.atm.cart }))
+@connect((state) => ({ card: state.atm.card }))
 
 export default class Atm extends Component {
   static propTypes = {
-    cart: PropTypes.object,
+    card: PropTypes.object,
     dispatch: PropTypes.func.isRequired
   }
 
   getCurrentScreen() {
-    const { cart } = this.props;
+    const { card } = this.props;
 
-    if (!cart) {
+    if (!card) {
       return atmScreens.Welcome;
-    } else if (!cart.authorised) {
+    } else if (!card.authorised) {
       return atmScreens.PinEnter;
     }
 
@@ -36,9 +36,9 @@ export default class Atm extends Component {
 
     switch (this.getCurrentScreen()) {
       case atmScreens.Welcome:
-        return <Components.WelcomeScreen onInsertCart={actions.insertCart} />;
+        return <Components.WelcomeScreen onInsertCard={actions.insertCard} />;
       case atmScreens.PinEnter:
-        return <Components.PinEnter onPinEnter={actions.checkPin} />;
+        return <Components.PinEnter onPinEnter={actions.checkPin} onCancel={actions.returnCard} />;
       case atmScreens.Error:
       default:
         return <Components.ErrorScreen />;

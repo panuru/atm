@@ -1,15 +1,20 @@
 import actionTypes from './actionTypes';
 
 export default {
-  insertCart: () => (
+  insertCard: () => (
     {
-      type: actionTypes.INSERT_CART,
-      cart: {
+      type: actionTypes.INSERT_CARD,
+      card: {
         pin: 1234
       }
     }),
-  checkPin: (input) => ({
-    type: actionTypes.CHECK_PIN,
-    input
-  })
+  checkPin: (input) => (
+    {
+      type: actionTypes.CHECK_PIN,
+      input
+    }),
+  returnCard: () => (
+    {
+      type: actionTypes.RETURN_CARD
+    }),
 };
