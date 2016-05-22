@@ -11,7 +11,19 @@ export default (state = initialState, action) => {
     case actionTypes.INSERT_CART:
       return {
         ...state,
-        cart: action.cart
+        cart: {
+          ...action.cart,
+          authorised: false
+        }
+      };
+
+    case actionTypes.CHECK_PIN:
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          authorised: action.input === state.cart.pin
+        }
       };
 
     default:

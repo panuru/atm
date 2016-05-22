@@ -5,8 +5,11 @@ export default {
     {
       type: actionTypes.INSERT_CART,
       cart: {
-        authorised: false,
         pin: 1234
       }
-    })
+    }),
+  checkPin: (input) => ({
+    type: actionTypes.CHECK_PIN,
+    input
+  })
 };

@@ -1,21 +1,25 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Button, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 
-const PinEnter = ({ onPinEnter, onCancel }) =>
-  (
-    <form>
-      <FormGroup>
-        <ControlLabel>Please enter PIN</ControlLabel>
-        <FormControl type="text" placeholder="- - - -" />
-      </FormGroup>
-      <Button onclick={onCancel}>Cancel</Button>
-      <Button className="pull-right" onclick={onPinEnter}>OK</Button>
-    </form>
-  );
+class PinEnter extends Component {
+  static propTypes = {
+    onPinEnter: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired
+  };
 
-PinEnter.propTypes = {
-  onPinEnter: PropTypes.func,
-  onCancel: PropTypes.func
-};
+  render() {
+    const { onCancel, onPinEnter } = this.props;
+    return (
+      <form>
+        <FormGroup>
+          <ControlLabel>Please enter PIN</ControlLabel>
+          <FormControl ref="pin" type="text" placeholder="- - - -" />
+        </FormGroup>
+        <Button onclick={onCancel}>Cancel</Button>
+        <Button className="pull-right" onclick={() => onPinEnter(this.refs.pin.text())}>OK</Button>
+      </form>
+    );
+  }
+}
 
 export default PinEnter;

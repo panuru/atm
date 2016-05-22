@@ -31,14 +31,14 @@ export default class Atm extends Component {
   }
 
   render() {
-    const { cart, dispatch } = this.props;
+    const { dispatch } = this.props;
     const actions = bindActionCreators(atmActions, dispatch);
 
     switch (this.getCurrentScreen()) {
       case atmScreens.Welcome:
         return <Components.WelcomeScreen onInsertCart={actions.insertCart} />;
       case atmScreens.PinEnter:
-        return <Components.PinEnter cart={cart} />;
+        return <Components.PinEnter onPinEnter={actions.checkPin} />;
       case atmScreens.Error:
       default:
         return <Components.ErrorScreen />;
