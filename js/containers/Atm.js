@@ -13,7 +13,7 @@ export default class Atm extends Component {
     dispatch: PropTypes.func.isRequired
   }
 
-  render() {
+  getScreen() {
     const { card, dispatch } = this.props;
     const actions = bindActionCreators(atmActions, dispatch);
 
@@ -36,6 +36,17 @@ export default class Atm extends Component {
       />);
     }
     return <Components.ErrorScreen onDismiss={actions.reset} />;
+  }
+
+  render() {
+    return (
+      <div>
+        <div className="atm-screen">
+          {this.getScreen()}
+        </div>
+        <Components.NumberKeyboard />
+      </div>
+    );
   }
 }
 /* eslint-enable react/prefer-stateless-function */

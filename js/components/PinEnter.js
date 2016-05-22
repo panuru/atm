@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import PubSub from 'pubsub-js';
 import { Alert, Button, FormGroup, FormControl, Panel } from 'react-bootstrap';
 
 class PinEnter extends Component {
@@ -17,9 +18,27 @@ class PinEnter extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  componentDidMount() {
+    this.__pubSubToken = PubSub.subscribe('KEYBOARD', (msg, data) => this.onKeyUp(data));
+  }
+
+  componentWillUnmount() {
+    PubSub.unsubscribe(this.__pubSubToken);
+  }
+
   onKeyUp(e) {
+    if (e.key === 'ENTER') {
+      this.onSubmit();
+      return;
+    }
+    if (e.key === 'CANCEL') {
+      this.props.onCancel();
+      return;
+    }
+
     const value = this.state.value;
-    if (e.which === 8) { // Backspace
+
+    if (e.which === 8 || e.key === 'BACKSPACE') {
       this.setState({ value: value.substr(0, value.length - 1) });
       return;
     }
@@ -28,13 +47,17 @@ class PinEnter extends Component {
         value: value + String.fromCharCode(e.which),
         isShowingLastDigit: true
       });
-
-      setTimeout(() => this.setState({ isShowingLastDigit: false }), 400);
+    } else {
+      this.setState({
+        value: value + e.key,
+        isShowingLastDigit: true
+      });
     }
+    setTimeout(() => this.setState({ isShowingLastDigit: false }), 400);
   }
 
   onSubmit(e) {
-    e.preventDefault();
+    if (e) { e.preventDefault(); }
 
     const pin = parseInt(this.state.value, 10);
     if (isNaN(pin)) { return; }

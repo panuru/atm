@@ -7,7 +7,13 @@ const WelcomeScreen = ({ onInsertCard }) =>
       <h1>Welcome to <nobr>The Bank Of Doom</nobr> ATM!</h1>
       <p>Please insert your card.</p>
       <form onSubmit={(e) => { e.preventDefault(); onInsertCard(); } }>
-        <Button bsStyle="primary" bsSize="large" autoFocus type="submit">Yeah, here it is!</Button>
+        <Button
+          bsStyle="primary"
+          bsSize="large"
+          autoFocus
+          type="submit"
+          className="center-block"
+        >Yeah, here it is!</Button>
       </form>
     </Jumbotron>
   );
