@@ -3,14 +3,19 @@ import '../css/app.scss';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Jumbotron } from 'react-bootstrap';
+import { combineReducers, createStore } from 'redux';
+import { Provider } from 'react-redux';
+import Atm from './containers/Atm';
+import * as reducers from './reducers';
+
+const store = createStore(combineReducers(reducers));
 
 ReactDOM.render(
-  <div className="container atm-main">
-    <Jumbotron>
-      <h1>Hello World!</h1>
-      <p>Nothing to see here, move along.</p>
-    </Jumbotron>
-  </div>,
-  document.getElementById('root')
+  (
+    <div className="container app-main">
+      <Provider store={store}>
+        <Atm />
+      </Provider>
+    </div>
+  ), document.getElementById('root')
 );
