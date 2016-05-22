@@ -4,44 +4,38 @@ import { bindActionCreators } from 'redux';
 import * as Components from '../components';
 import atmActions from '../actions/atmActions';
 
-const atmScreens = {
-  Welcome: 'Welcome',
-  PinEnter: 'PinEnter',
-  Error: 'Error'
-};
-
 @connect((state) => ({ card: state.atm.card }))
 
+/* eslint-disable react/prefer-stateless-function */
 export default class Atm extends Component {
   static propTypes = {
     card: PropTypes.object,
     dispatch: PropTypes.func.isRequired
   }
 
-  getCurrentScreen() {
-    const { card } = this.props;
-
-    if (!card) {
-      return atmScreens.Welcome;
-    } else if (!card.authorised) {
-      return atmScreens.PinEnter;
-    }
-
-    return atmScreens.Error;
-  }
-
   render() {
-    const { dispatch } = this.props;
+    const { card, dispatch } = this.props;
     const actions = bindActionCreators(atmActions, dispatch);
 
-    switch (this.getCurrentScreen()) {
-      case atmScreens.Welcome:
-        return <Components.WelcomeScreen onInsertCard={actions.insertCard} />;
-      case atmScreens.PinEnter:
-        return <Components.PinEnter onPinEnter={actions.checkPin} onCancel={actions.returnCard} />;
-      case atmScreens.Error:
-      default:
-        return <Components.ErrorScreen />;
+    if (!card) {
+      return <Components.WelcomeScreen onInsertCard={actions.insertCard} />;
     }
+    if (card.isBlocked) {
+      return (<Components.InfoScreen
+        title="Card blocked"
+        message="We have blocked and retained your card. It's just not your day, right?"
+        onDismiss={actions.reset}
+      />);
+    }
+    if (!card.authorised) {
+      return (<Components.PinEnter
+        attemptsCount={card.attemptsCount}
+        maxAttempts={card.maxAttempts}
+        onPinEnter={actions.checkPin}
+        onCancel={actions.returnCard}
+      />);
+    }
+    return <Components.ErrorScreen onDismiss={actions.reset} />;
   }
 }
+/* eslint-enable react/prefer-stateless-function */

@@ -8,13 +8,11 @@ export default {
         pin: 1234
       }
     }),
-  checkPin: (input) => (
+  checkPin: (pin) => (
     {
       type: actionTypes.CHECK_PIN,
-      input
+      pin
     }),
-  returnCard: () => (
-    {
-      type: actionTypes.RETURN_CARD
-    }),
+  returnCard: () => ({ type: actionTypes.RETURN_CARD }),
+  reset: () => ({ type: actionTypes.RESET })
 };

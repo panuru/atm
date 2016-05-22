@@ -1,11 +1,14 @@
 import React, { PropTypes } from 'react';
-import { Jumbotron } from 'react-bootstrap';
+import { Button, Jumbotron } from 'react-bootstrap';
 
 const WelcomeScreen = ({ onInsertCard }) =>
   (
-    <Jumbotron onClick={onInsertCard}>
-      <h1>Welcome to <nobr>Banky Bank</nobr> ATM!</h1>
+    <Jumbotron>
+      <h1>Welcome to <nobr>The Bank Of Doom</nobr> ATM!</h1>
       <p>Please insert your card.</p>
+      <form onSubmit={(e) => { e.preventDefault(); onInsertCard(); } }>
+        <Button bsStyle="primary" bsSize="large" autoFocus type="submit">Yeah, here it is!</Button>
+      </form>
     </Jumbotron>
   );
 
