@@ -1,4 +1,4 @@
-import actionTypes from './actionTypes';
+import * as actionTypes from './actionTypes';
 import { getCardData } from '../utils/dataProvider';
 
 export function returnCard() {
@@ -16,7 +16,7 @@ export function error(err) {
 
 export function receiveCard() {
   return {
-    type: actionTypes.INSERT_CARD
+    type: actionTypes.RECEIVE_CARD
   };
 }
 export function readCard(card) {

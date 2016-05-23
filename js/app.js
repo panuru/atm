@@ -3,12 +3,18 @@ import '../css/app.scss';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { combineReducers, createStore } from 'redux';
+import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { Provider } from 'react-redux';
+import thunkMiddleware from 'redux-thunk';
 import Atm from './containers/Atm';
 import * as reducers from './reducers';
 
-const store = createStore(combineReducers(reducers));
+const store = createStore(
+  combineReducers(reducers),
+  applyMiddleware(
+    thunkMiddleware
+  )
+);
 
 ReactDOM.render(
   (
