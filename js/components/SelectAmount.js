@@ -1,8 +1,8 @@
 import '../../css/components/SelectAmount.scss';
 
 import React, { Component, PropTypes } from 'react';
-import PubSub from 'pubsub-js';
-import { Button, Col, Grid, Panel, Row } from 'react-bootstrap';
+import { Button, Col, Grid, Modal, Panel, Row } from 'react-bootstrap';
+import SelectCustomAmount from './SelectCustomAmount';
 
 export default class SelectAmount extends Component {
   static propTypes = {
@@ -13,26 +13,24 @@ export default class SelectAmount extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      showModal: false
+    };
+
     this.onClick = this.onClick.bind(this);
-    this.onKeyUp = this.onKeyUp.bind(this);
-  }
-
-  componentDidMount() {
-    this.__pubSubToken = PubSub.subscribe('KEYBOARD', (msg, data) => this.onKeyUp(data));
-  }
-
-  componentWillUnmount() {
-    PubSub.unsubscribe(this.__pubSubToken);
   }
 
   onClick(e) {
-    const amount = parseInt(e.target.getAttribute('data-amount'), 10);
-    if (isNaN(amount)) { return; }
-    this.props.onSelect(amount);
+    const amount = e.target.getAttribute('data-amount');
+    if (amount === 'custom') {
+      this.setState({ showModal: true });
+      return;
+    }
+    this.props.onSelect(parseInt(amount, 10));
   }
 
-  onKeyUp(e) {
-    console.log(e);
+  closeModal() {
+    this.setState({ showModal: false });
   }
 
   render() {
@@ -65,11 +63,20 @@ export default class SelectAmount extends Component {
           </Row>
           <Row>
             <Col xs={12}>
-              <Button onClick={this.onClick} block>Enter custom amount</Button>
+              <Button onClick={this.onClick} data-amount="custom" block>Enter custom amount</Button>
             </Col>
           </Row>
         </Grid>
+        <Modal show={this.state.showModal} onHide={this.close}>
+          <Modal.Header closeButton>
+            <Modal.Title>Enter custom amount</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <SelectCustomAmount onCancel={this.closeModal} onSelect={this.props.onSelect} />
+          </Modal.Body>
+        </Modal>
       </Panel>
+
     );
   }
 }
