@@ -1,4 +1,4 @@
-import { getCardData } from '../utils/dataProvider';
+import { getCardData, authorizeCard } from '../utils/dataProvider';
 import { error, wait, waitDone } from './atm';
 
 export const CARD_INSERTED = 'CARD_INSERTED';
@@ -22,10 +22,20 @@ export function insertCard() {
   };
 }
 
-export function checkPin(pin) {
-  return {
-    type: CHECK_PIN,
-    pin
+export function checkPin(card, pin) {
+  return (dispatch) => {
+    dispatch(wait());
+
+    authorizeCard(card, pin).then(
+      (authData) => {
+        dispatch(waitDone());
+        dispatch({
+          type: CHECK_PIN,
+          authData
+        });
+      },
+      (err) => dispatch(error(err))
+    );
   };
 }
 

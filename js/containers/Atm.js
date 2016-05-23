@@ -48,7 +48,7 @@ export default class Atm extends Component {
       return (<Components.PinEnter
         attemptsCount={card.attemptsCount}
         maxAttempts={card.maxAttempts}
-        onPinEnter={actions.card.checkPin}
+        onPinEnter={(pin) => actions.card.checkPin(card, pin)}
         onCancel={actions.card.returnCard}
       />);
     }

@@ -1,16 +1,30 @@
-export function getCardData() {
-  return new Promise((resolve, reject) => {
+const getMockPromise = (data, shouldFailSometimes = true) =>
+  new Promise((resolve, reject) => {
     const randomMs = Math.round(Math.random() * 1000);
 
     setTimeout(() => {
-      if (randomMs < 100) {
-        // In about 1 in 100 cases, will fail unexplainably, just like in the real world
+      if (shouldFailSometimes && randomMs < 100) {
+        // In about 1 in 100 cases, it will fail unexplainably, just like a real ATM
         reject();
       } else {
-        resolve({
-          pin: 1234
-        });
+        resolve(data);
       }
     }, randomMs);
   });
+
+export function getCardData() {
+  return getMockPromise({
+    pin: 1234
+  });
+}
+
+export function authorizeCard(card, pin) {
+  const data = card.pin === pin ? {
+    isAuthorized: true,
+    cardHolder: 'I.C. WIENER',
+    balance: 6666,
+  } : {
+    isAuthorized: false,
+  };
+  return getMockPromise(data);
 }

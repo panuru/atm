@@ -21,10 +21,12 @@ export default (state = initialState, action) => {
       };
 
     case CHECK_PIN:
-      if (action.pin === state.pin) {
+      if (action.authData.isAuthorised) {
         return {
           ...state,
           isAuthorised: true,
+          cardHolder: action.authData.cardHolder,
+          balance: action.authData.balance,
           attemptsCount: 0
         };
       } else {
