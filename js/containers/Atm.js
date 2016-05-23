@@ -52,7 +52,7 @@ export default class Atm extends Component {
         onCancel={actions.card.returnCard}
       />);
     }
-    return <Components.ErrorScreen onDismiss={actions.atm.reset} />;
+    return <Components.SelectAmount />;
   }
 
   render() {

@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import PubSub from 'pubsub-js';
 import { Alert, Button, FormGroup, FormControl, Panel } from 'react-bootstrap';
 
-class PinEnter extends Component {
+export default class PinEnter extends Component {
   static propTypes = {
     onPinEnter: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
@@ -24,6 +24,7 @@ class PinEnter extends Component {
 
   componentWillUnmount() {
     PubSub.unsubscribe(this.__pubSubToken);
+    clearTimeout(this.__timeout);
   }
 
   onKeyUp(e) {
@@ -53,18 +54,18 @@ class PinEnter extends Component {
         isShowingLastDigit: true
       });
     }
-    setTimeout(() => this.setState({ isShowingLastDigit: false }), 400);
+
+    clearTimeout(this.__timeout);
+    this.__timeout = setTimeout(() => this.setState({ isShowingLastDigit: false }), 400);
   }
 
   onSubmit(e) {
     if (e) { e.preventDefault(); }
 
-    const pin = parseInt(this.state.value, 10);
-    if (isNaN(pin)) { return; }
+    if (!this.state.value) { return; }
 
+    this.props.onPinEnter(this.state.value);
     this.setState({ value: '' });
-
-    this.props.onPinEnter(pin);
   }
 
   getFormattedPin() {
@@ -123,5 +124,3 @@ class PinEnter extends Component {
     );
   }
 }
-
-export default PinEnter;

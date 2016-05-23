@@ -14,17 +14,17 @@ const getMockPromise = (data, shouldFailSometimes = true) =>
 
 export function getCardData() {
   return getMockPromise({
-    pin: 1234
+    pin: '1234'
   });
 }
 
 export function authorizeCard(card, pin) {
-  const data = card.pin === pin ? {
-    isAuthorized: true,
+  const data = card.pin.toString() === pin.toString() ? {
+    isAuthorised: true,
     cardHolder: 'I.C. WIENER',
     balance: 6666,
   } : {
-    isAuthorized: false,
+    isAuthorised: false,
   };
   return getMockPromise(data);
 }
