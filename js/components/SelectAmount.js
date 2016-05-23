@@ -6,13 +6,14 @@ import { Button, Col, Grid, Panel, Row } from 'react-bootstrap';
 
 export default class SelectAmount extends Component {
   static propTypes = {
-    onAmountSelect: PropTypes.func.isRequired,
+    onSelect: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
   };
 
   constructor(props) {
     super(props);
 
+    this.onClick = this.onClick.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
   }
 
@@ -24,12 +25,14 @@ export default class SelectAmount extends Component {
     PubSub.unsubscribe(this.__pubSubToken);
   }
 
-  onKeyUp(e) {
-    console.log(e);
+  onClick(e) {
+    const amount = parseInt(e.target.getAttribute('data-amount'), 10);
+    if (isNaN(amount)) { return; }
+    this.props.onSelect(amount);
   }
 
-  onClick(e) {
-    console.log(e.target.getAttribute('data-amount'));
+  onKeyUp(e) {
+    console.log(e);
   }
 
   render() {

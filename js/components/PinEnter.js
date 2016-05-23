@@ -38,25 +38,26 @@ export default class PinEnter extends Component {
     }
 
     const value = this.state.value;
-
     if (e.which === 8 || e.key === 'BACKSPACE') {
       this.setState({ value: value.substr(0, value.length - 1) });
       return;
     }
-    if (e.which >= 48 && e.which <= 57) { // Number 0-9
-      this.setState({
-        value: value + String.fromCharCode(e.which),
-        isShowingLastDigit: true
-      });
-    } else {
-      this.setState({
-        value: value + e.key,
-        isShowingLastDigit: true
-      });
-    }
 
-    clearTimeout(this.__timeout);
-    this.__timeout = setTimeout(() => this.setState({ isShowingLastDigit: false }), 400);
+    let digit;
+    if (e.which >= 48 && e.which <= 57) { // Keyboard number 0-9
+      digit = String.fromCharCode(e.which);
+    } else if (/\d/.test(e.key)) { // Virtual keyboard digit
+      digit = e.key;
+    }
+    if (digit) {
+      this.setState({
+        value: value + digit,
+        isShowingLastDigit: true
+      });
+
+      clearTimeout(this.__timeout);
+      this.__timeout = setTimeout(() => this.setState({ isShowingLastDigit: false }), 400);
+    }
   }
 
   onSubmit(e) {
@@ -64,8 +65,8 @@ export default class PinEnter extends Component {
 
     if (!this.state.value) { return; }
 
-    this.props.onPinEnter(this.state.value);
     this.setState({ value: '' });
+    this.props.onPinEnter(this.state.value);
   }
 
   getFormattedPin() {

@@ -11,11 +11,11 @@ export function insertCard() {
 
     getCardData().then(
       (card) => {
-        dispatch(waitDone());
         dispatch({
           type: CARD_INSERTED,
           card
         });
+        dispatch(waitDone());
       },
       (err) => dispatch(error(err))
     );
@@ -28,11 +28,11 @@ export function checkPin(card, pin) {
 
     authorizeCard(card, pin).then(
       (authData) => {
-        dispatch(waitDone());
         dispatch({
           type: CHECK_PIN,
           authData
         });
+        dispatch(waitDone());
       },
       (err) => dispatch(error(err))
     );

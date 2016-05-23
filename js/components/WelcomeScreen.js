@@ -13,7 +13,7 @@ const WelcomeScreen = ({ onInsertCard }) =>
           autoFocus
           type="submit"
           className="center-block"
-        >Yeah, here it is!</Button>
+        >Here it is, my card!</Button>
       </form>
     </Jumbotron>
   );

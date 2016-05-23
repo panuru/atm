@@ -2,7 +2,7 @@ import { RESET } from '../actions/atm';
 import { CARD_INSERTED, CHECK_PIN, REMOVE_CARD } from '../actions/card';
 
 const initialState = {
-  pin: 1234,
+  pin: '1234',
   isInserted: false,
   isAuthorised: false,
   attemptsCount: 0,

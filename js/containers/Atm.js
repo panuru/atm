@@ -4,13 +4,14 @@ import { bindActionCreators } from 'redux';
 import * as Components from '../components';
 import * as actionCreators from '../actions/index';
 
-@connect((state) => ({ atm: state.atm, card: state.card }))
+@connect((state) => ({ atm: state.atm, card: state.card, account: state.account }))
 
 /* eslint-disable react/prefer-stateless-function */
 export default class Atm extends Component {
   static propTypes = {
     atm: PropTypes.object.isRequired,
     card: PropTypes.object.isRequired,
+    account: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired
   }
 
@@ -25,7 +26,7 @@ export default class Atm extends Component {
   }
 
   getScreen() {
-    const { card, atm: { isWaiting, isError } } = this.props;
+    const { card, account, atm: { isWaiting, isError } } = this.props;
     const actions = this.actions;
 
     if (isError) {
@@ -52,7 +53,25 @@ export default class Atm extends Component {
         onCancel={actions.card.returnCard}
       />);
     }
-    return <Components.SelectAmount />;
+    if (!account.isLoaded) {
+      setTimeout(() => (actions.account.load(card)), 0);
+      return <Components.WaitingScreen />;
+    }
+    if (account.hasWithdrawn) {
+      return (
+        <Components.InfoScreen
+          title="Thank you!"
+          message={`Please take your imaginary ${account.hasWithdrawn}\$ and card.`}
+          onDismiss={actions.atm.reset}
+        />
+      );
+    }
+    return (
+      <Components.SelectAmount
+        onSelect={(amount) => actions.account.withdraw(account, amount)}
+        onCancel={actions.card.returnCard}
+      />
+    );
   }
 
   render() {
