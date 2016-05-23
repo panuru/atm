@@ -1,4 +1,4 @@
-import actionTypes from '../actions/actionTypes';
+import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
   card: null,
@@ -8,9 +8,15 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.INSERT_CARD:
+    case actionTypes.RECEIVE_CARD:
       return {
         ...state,
+        isWaiting: true
+      };
+    case actionTypes.READ_CARD:
+      return {
+        ...state,
+        isWaiting: false,
         card: {
           ...action.card,
           authorised: false,
@@ -46,7 +52,14 @@ export default (state = initialState, action) => {
     case actionTypes.RESET:
       return {
         ...state,
+        isError: false,
+        isWaiting: false,
         card: null
+      };
+    case actionTypes.ERROR:
+      return {
+        ...state,
+        isError: true
       };
 
     default:

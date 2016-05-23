@@ -2,21 +2,27 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as Components from '../components';
-import atmActions from '../actions/atmActions';
+import * as atmActions from '../actions/atmActions';
 
-@connect((state) => ({ card: state.atm.card }))
+@connect((state) => ({ atm: state.atm }))
 
 /* eslint-disable react/prefer-stateless-function */
 export default class Atm extends Component {
   static propTypes = {
-    card: PropTypes.object,
+    atm: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired
   }
 
   getScreen() {
-    const { card, dispatch } = this.props;
+    const { atm: { card, isWaiting, isError }, dispatch } = this.props;
     const actions = bindActionCreators(atmActions, dispatch);
 
+    if (isError) {
+      return <Components.ErrorScreen onDismiss={actions.reset} />;
+    }
+    if (isWaiting) {
+      return <Components.WaitingScreen />;
+    }
     if (!card) {
       return <Components.WelcomeScreen onInsertCard={actions.insertCard} />;
     }
