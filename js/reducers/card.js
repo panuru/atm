@@ -1,5 +1,5 @@
 import { RESET } from '../actions/atm';
-import { INSERT_CARD, CHECK_PIN, REMOVE_CARD } from '../actions/card';
+import { INSERT_CARD, CHECK_PIN, RETURN_CARD } from '../actions/card';
 
 /**
  * Reducer for card actions
@@ -10,7 +10,8 @@ const initialState = {
   isInserted: false,
   isAuthorised: false,
   attemptsCount: 0,
-  maxAttempts: 3
+  maxAttempts: 3,
+  hasReturnedCard: false
 };
 
 export default (state = initialState, action) => {
@@ -44,10 +45,11 @@ export default (state = initialState, action) => {
         };
       }
 
-    case REMOVE_CARD:
+    case RETURN_CARD:
       return {
         ...state,
-        isInserted: false
+        isInserted: false,
+        hasReturnedCard: true
       };
 
     default:

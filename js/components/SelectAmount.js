@@ -18,6 +18,7 @@ export default class SelectAmount extends Component {
     };
 
     this.onClick = this.onClick.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   onClick(e) {
@@ -68,7 +69,7 @@ export default class SelectAmount extends Component {
           </Row>
         </Grid>
         <Modal show={this.state.showModal} onHide={this.close}>
-          <Modal.Header closeButton>
+          <Modal.Header>
             <Modal.Title>Enter custom amount</Modal.Title>
           </Modal.Header>
           <Modal.Body>

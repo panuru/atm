@@ -77,7 +77,7 @@ export default class SelectAmount extends Component {
           />
         </FormGroup>
 
-        <Button onclick={this.props.onCancel}>Cancel</Button>
+        <Button onClick={this.props.onCancel}>Cancel</Button>
         <Button
           bsStyle="primary"
           className="pull-right"

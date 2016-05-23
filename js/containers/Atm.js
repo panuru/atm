@@ -44,6 +44,13 @@ export default class Atm extends Component {
     if (isWaiting) {
       return <Components.WaitingScreen />;
     }
+    if (card.hasReturnedCard) {
+      return (<Components.InfoScreen
+        title="See you!"
+        message="Please take back your card"
+        onDismiss={actions.atm.reset}
+      />);
+    }
     if (!card.isInserted) {
       return <Components.WelcomeScreen onInsertCard={actions.card.insertCard} />;
     }
