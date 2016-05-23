@@ -1,5 +1,9 @@
 import { RESET, ERROR, WAIT, WAIT_DONE } from '../actions/atm';
 
+/**
+ * Reducer for common actions like error, wait
+ */
+
 const initialState = {
   isWaiting: false,
   isError: false
@@ -7,6 +11,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    // On RESET, all reducers reset their part of the state.
     case RESET:
       return initialState;
 

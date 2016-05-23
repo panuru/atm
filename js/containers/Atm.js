@@ -4,6 +4,14 @@ import { bindActionCreators } from 'redux';
 import * as Components from '../components';
 import * as actionCreators from '../actions/index';
 
+/**
+ * This the only 'container' component that is aware of state and actions.
+ * It gets the state in props from redux connector;
+ * Based on state, it figures out which screen to render, and attaches action callbacks to it.
+ *
+ * TODO: with more logic, there will be a need to split this into more components.
+ */
+
 @connect((state) => ({ atm: state.atm, card: state.card, account: state.account }))
 
 /* eslint-disable react/prefer-stateless-function */
@@ -18,6 +26,7 @@ export default class Atm extends Component {
   constructor(props) {
     super(props);
 
+    // Initialize actions once, as they are not going to change with the state.
     const { dispatch } = props;
     this.actions = Object.keys(actionCreators).reduce((memo, key) => (
       {
@@ -54,6 +63,7 @@ export default class Atm extends Component {
       />);
     }
     if (!account.isLoaded) {
+      // If card is authorised, load account immediately.
       setTimeout(() => (actions.account.load(card)), 0);
       return <Components.WaitingScreen />;
     }
