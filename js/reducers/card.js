@@ -1,32 +1,39 @@
 import { RESET } from '../actions/atm';
-import { CARD_INSERTED, CHECK_PIN, REMOVE_CARD } from '../actions/card';
+import { INSERT_CARD, CHECK_PIN, RETURN_CARD } from '../actions/card';
+
+/**
+ * Reducer for card actions
+ */
 
 const initialState = {
   pin: '1234',
   isInserted: false,
   isAuthorised: false,
   attemptsCount: 0,
-  maxAttempts: 3
+  maxAttempts: 3,
+  hasReturnedCard: false
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    // On RESET, all reducers reset their part of the state.
     case RESET:
       return initialState;
 
-    case CARD_INSERTED:
+    case INSERT_CARD:
       return {
         ...state,
         isInserted: true
       };
 
     case CHECK_PIN:
-      if (action.authData.isAuthorised) {
+      if (action.card.isAuthorised) {
         return {
           ...state,
+          // card data is passed as is from data provider;
+          // currently, some fields are not used
+          ...action.card,
           isAuthorised: true,
-          cardHolder: action.authData.cardHolder,
-          balance: action.authData.balance,
           attemptsCount: 0
         };
       } else {
@@ -38,10 +45,11 @@ export default (state = initialState, action) => {
         };
       }
 
-    case REMOVE_CARD:
+    case RETURN_CARD:
       return {
         ...state,
-        isInserted: false
+        isInserted: false,
+        hasReturnedCard: true
       };
 
     default:

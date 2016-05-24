@@ -3,6 +3,10 @@ export const ERROR = 'ERROR';
 export const WAIT = 'WAIT';
 export const WAIT_DONE = 'WAIT_DONE';
 
+/**
+ * Global actions like reset state, error, and wait
+ */
+
 export function reset() {
   return { type: RESET };
 }

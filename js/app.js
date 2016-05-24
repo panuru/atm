@@ -9,6 +9,11 @@ import thunkMiddleware from 'redux-thunk';
 import Atm from './containers/Atm';
 import * as reducers from './reducers';
 
+/** This is the entry point for the application.
+  * Create a Redux store, pass it to provider,
+  * render the aplication into root container.
+  */
+
 const store = createStore(
   combineReducers(reducers),
   applyMiddleware(

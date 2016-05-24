@@ -1,8 +1,21 @@
+$number-keyboard-height: 220px;
+
 .number-keyboard {
+  position: absolute;
+  background-color: #f1f1f1;
+  bottom: 0;
+  left: 0;
+  z-index: 9999;
+  margin: 0;
+  width: 100%;
+  padding-top: 20px;
+  border: solid 1px #999;
+  height: $number-keyboard-height;
+
   .row {
     margin-bottom: 15px;
   }
-  .btn {
-
-  }
+}
+body {
+  padding-bottom: $number-keyboard-height;
 }

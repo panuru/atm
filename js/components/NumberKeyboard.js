@@ -4,6 +4,19 @@ import React, { Component } from 'react';
 import PubSub from 'pubsub-js';
 import { Button, Grid, Row, Col } from 'react-bootstrap';
 
+/**
+ * Number keyboard, like the one that you see on a real ATM.
+ *
+ * Keyboard is available globally, so it accepts no handlers like onKeyPressed.
+ * Instead, pub-sub mechanism is used to trigger and listen to key press events.
+ * Subscribe to global number keyboard events like this:
+ *
+ * let token = PubSub.subscribe('KEYBOARD', (msg, { key }) => console.log(key));
+ *
+ * To stop listening:
+ *
+ * PubSub.unsubscribe(token)
+ */
 export default class NumberKeyboard extends Component {
   onClick(e) {
     const key = e.target.getAttribute('data-key');

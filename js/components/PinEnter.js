@@ -63,10 +63,11 @@ export default class PinEnter extends Component {
   onSubmit(e) {
     if (e) { e.preventDefault(); }
 
-    if (!this.state.value) { return; }
+    const { value } = this.state;
+    if (!value) { return; }
 
     this.setState({ value: '' });
-    this.props.onPinEnter(this.state.value);
+    this.props.onPinEnter(value);
   }
 
   getFormattedPin() {
@@ -111,7 +112,7 @@ export default class PinEnter extends Component {
             />
           </FormGroup>
 
-          <Button onclick={this.props.onCancel}>Cancel</Button>
+          <Button onClick={this.props.onCancel}>Cancel</Button>
           <Button
             bsStyle="primary"
             className="pull-right"

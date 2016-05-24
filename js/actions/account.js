@@ -1,8 +1,13 @@
 import { getAccountData, withdrawFromAccount } from '../utils/dataProvider';
 import { error, wait, waitDone } from './atm';
 
-export const LOAD = 'LOAD';
-export const WITHDRAW = 'WITHDRAWN';
+/**
+ * Account actions: load account and withdraw cash.
+ * Both are asynchronous and dispatch wait/waitDone actions.
+ */
+
+export const LOAD_ACCOUNT = 'LOAD_ACCOUNT';
+export const WITHDRAW_CASH = 'WITHDRAW_CASHN';
 
 export function load(card) {
   return (dispatch) => {
@@ -11,7 +16,7 @@ export function load(card) {
     getAccountData(card).then(
       (account) => {
         dispatch({
-          type: LOAD,
+          type: LOAD_ACCOUNT,
           account
         });
         dispatch(waitDone());
@@ -27,7 +32,7 @@ export function withdraw(account, amount) {
     withdrawFromAccount(account, amount).then(
       (newAccount) => {
         dispatch({
-          type: WITHDRAW,
+          type: WITHDRAW_CASH,
           amount,
           account: newAccount
         });

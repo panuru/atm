@@ -1,5 +1,9 @@
 import { RESET } from '../actions/atm';
-import { LOAD, WITHDRAW } from '../actions/account';
+import { LOAD_ACCOUNT, WITHDRAW_CASH } from '../actions/account';
+
+/**
+ * Reducer for account actions
+ */
 
 const initialState = {
   balance: 0,
@@ -9,20 +13,21 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    // On RESET, all reducers reset their part of the state.
     case RESET:
       return initialState;
 
-    case LOAD:
+    case LOAD_ACCOUNT:
       return {
         ...action.account,
         isLoaded: true,
         hasWithdrawn: false
       };
 
-    case WITHDRAW:
+    case WITHDRAW_CASH:
       return {
         ...state,
-        balance: action.account.balance,
+        ...action.account,
         hasWithdrawn: action.amount
       };
 
